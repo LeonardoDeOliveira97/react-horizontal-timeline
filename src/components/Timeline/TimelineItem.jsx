@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { isActivationKey, KEYS } from '../../utils/a11yUtils';
 
 function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdit, onStopEdit, start, end, backgroundColor }) {
     const textRef = useRef(null);
@@ -38,10 +39,19 @@ function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdi
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === KEYS.ENTER && !e.shiftKey) {
+            e.preventDefault();
             handleSave();
-        } else if (e.key === 'Escape') {
+        } else if (e.key === KEYS.ESCAPE) {
+            e.preventDefault();
             handleCancel();
+        }
+    };
+
+    const handleItemKeyDown = (e) => {
+        if (!isEditing && isActivationKey(e.key)) {
+            e.preventDefault();
+            handleDoubleClick();
         }
     };
 
@@ -51,13 +61,17 @@ function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdi
 
     return (
         <div
-            title={!isEditing ? `${name} (${start} to ${end})` : undefined}
+            role="button"
+            tabIndex={isEditing ? -1 : 0}
+            aria-label={`Timeline item: ${name}. Duration: ${start} to ${end}. ${isEditing ? 'Currently editing' : 'Double-click or press Enter to edit'}`}
+            aria-describedby={isOverflowing ? `tooltip-${itemId}` : undefined}
             className={`timeline-item ${isEditing ? 'editing' : ''}`}
             style={{
                 width,
                 backgroundColor: isEditing ? '#fff' : backgroundColor
             }}
-            onDoubleClick={handleDoubleClick}
+            onDoubleClick={!isEditing ? handleDoubleClick : undefined}
+            onKeyDown={!isEditing ? handleItemKeyDown : undefined}
         >
             {isEditing ? (
                 <input
@@ -68,13 +82,32 @@ function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdi
                     onKeyDown={handleKeyDown}
                     onBlur={handleInputBlur}
                     className="timeline-item-input"
+                    aria-label={`Edit item name: ${name}`}
+                    aria-describedby={`help-${itemId}`}
                 />
             ) : (
                 <span
                     ref={textRef}
                     className="timeline-item-text"
+                    aria-hidden="true"
                 >
                     {name}
+                </span>
+            )}
+
+            <span
+                id={`help-${itemId}`}
+                className="sr-only"
+            >
+                Press Enter to save, Escape to cancel
+            </span>
+
+            {isOverflowing && (
+                <span
+                    id={`tooltip-${itemId}`}
+                    className="sr-only"
+                >
+                    Full text: {name}
                 </span>
             )}
         </div>

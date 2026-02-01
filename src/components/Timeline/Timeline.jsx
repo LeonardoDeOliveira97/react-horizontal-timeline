@@ -9,13 +9,18 @@ function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit 
     const maxDate = Math.max(...items.map(i => new Date(i.end)));
 
     return (
-        <div>
+        <div 
+            role="img"
+            aria-label={`Timeline with ${items.length} items arranged in ${lanes.length} horizontal lanes`}
+        >
             {lanes.map((lane, laneIndex) => {
                 const left = getLaneLeft(lane, minDate, maxDate);
 
                 return (
                     <div
                         key={laneIndex}
+                        role="group"
+                        aria-label={`Lane ${laneIndex + 1} with ${lane.length} items`}
                         style={{
                             position: 'relative',
                             height: 40,

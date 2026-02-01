@@ -18,24 +18,40 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1 className="app-title">
-        Project Horizontal Timeline
-      </h1>
+      <a href="#timeline" className="skip-link">
+        Skip to timeline
+      </a>
+      
+      <header>
+        <h1 className="app-title">
+          Project Horizontal Timeline
+        </h1>
+      </header>
 
-      <ZoomControls
-        zoomLevel={zoomLevel}
-        onZoomIn={handleZoomIn}
-        onZoomOut={handleZoomOut}
-      />
+      <main>
+        <ZoomControls
+          zoomLevel={zoomLevel}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+        />
 
-      <TimelineContainer
-        zoomLevel={zoomLevel}
-        items={items}
-        editingItemId={editingItemId}
-        onNameChange={handleNameChange}
-        onStartEdit={handleStartEdit}
-        onStopEdit={handleStopEdit}
-      />
+        <section 
+          id="timeline"
+          aria-labelledby="timeline-title"
+        >
+          <h2 id="timeline-title" className="sr-only">
+            Timeline View
+          </h2>
+          <TimelineContainer
+            zoomLevel={zoomLevel}
+            items={items}
+            editingItemId={editingItemId}
+            onNameChange={handleNameChange}
+            onStartEdit={handleStartEdit}
+            onStopEdit={handleStopEdit}
+          />
+        </section>
+      </main>
     </div>
   );
 }
