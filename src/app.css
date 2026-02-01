@@ -12,6 +12,59 @@ body {
   margin-bottom: 24px;
 }
 
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.zoom-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #4f46e5;
+  background-color: white;
+  color: #4f46e5;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.zoom-btn:active {
+  transform: scale(0.95);
+}
+
+.zoom-level {
+  font-weight: 500;
+  font-size: 14px;
+  color: #666;
+  min-width: 40px;
+  text-align: center;
+}
+
+.timeline-container {
+  overflow: auto;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.timeline-zoom-wrapper {
+  transition: transform 0.3s ease;
+}
+
 .timeline-lane {
   position: relative;
   height: 40px;
