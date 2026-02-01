@@ -1,5 +1,6 @@
 import assignLanes from "../../assignLanes";
 import { getItemWidth, getLaneLeft } from "../../utils/timelineUtils";
+import { generateItemColor } from "../../utils/colorUtils";
 import TimelineItem from "./TimelineItem";
 
 function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit }) {
@@ -31,6 +32,7 @@ function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit 
                         >
                             {lane.map(item => {
                                 const { width } = getItemWidth(item);
+                                const backgroundColor = generateItemColor(item.id);
 
                                 return (
                                     <TimelineItem
@@ -38,6 +40,7 @@ function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit 
                                         itemId={item.id}
                                         name={item.name}
                                         width={width}
+                                        backgroundColor={backgroundColor}
                                         isEditing={editingItemId === item.id}
                                         onNameChange={onNameChange}
                                         onStartEdit={onStartEdit}
