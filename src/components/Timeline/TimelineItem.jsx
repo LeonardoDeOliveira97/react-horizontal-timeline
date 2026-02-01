@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdit, onStopEdit }) {
+function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdit, onStopEdit, start, end }) {
     const textRef = useRef(null);
     const inputRef = useRef(null);
     const [isOverflowing, setIsOverflowing] = useState(false);
@@ -51,7 +51,7 @@ function TimelineItem({ name, width, onNameChange, itemId, isEditing, onStartEdi
 
     return (
         <div
-            title={!isEditing && isOverflowing ? name : undefined}
+            title={!isEditing ? `${name} (${start} to ${end})` : undefined}
             className={`timeline-item ${isEditing ? 'editing' : ''}`}
             style={{
                 width

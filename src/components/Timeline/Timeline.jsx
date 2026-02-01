@@ -7,8 +7,6 @@ function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit 
     const minDate = Math.min(...items.map(i => new Date(i.start)));
     const maxDate = Math.max(...items.map(i => new Date(i.end)));
 
-    console.log(lanes);
-
     return (
         <div>
             {lanes.map((lane, laneIndex) => {
@@ -44,6 +42,8 @@ function Timeline({ items, editingItemId, onNameChange, onStartEdit, onStopEdit 
                                         onNameChange={onNameChange}
                                         onStartEdit={onStartEdit}
                                         onStopEdit={onStopEdit}
+                                        start={item.start}
+                                        end={item.end}
                                     />
                                 );
                             })}
